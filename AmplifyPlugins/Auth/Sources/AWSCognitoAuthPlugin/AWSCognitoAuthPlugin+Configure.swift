@@ -155,10 +155,12 @@ extension AWSCognitoAuthPlugin {
     }
 
     private func makeHostedUISession() -> HostedUISessionBehavior {
-        if let options = self.customWebUIOptions, options.preferSafariViewController {
-            #if os(iOS) || os(visionOS)
-            return HostedUISafariViewController()
-            #endif
+        if let pluginOptions = customWebUIOptions?.pluginOptions as? [String: Any] {
+            if let customKey = pluginOptions["useSafari"] as? Bool, customKey {
+                #if os(iOS) || os(visionOS)
+                return HostedUISafariViewController()
+                #endif
+            }
         }
         return HostedUIASWebAuthenticationSession()
     }

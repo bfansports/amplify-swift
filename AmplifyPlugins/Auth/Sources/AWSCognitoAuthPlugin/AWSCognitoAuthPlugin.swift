@@ -14,7 +14,7 @@ import SafariServices
 
 public final class AWSCognitoAuthPlugin: AWSCognitoAuthPluginBehavior {
 
-    private var customWebUIOptions: AWSAuthWebUISignInOptions?
+    var customWebUIOptions: AuthWebUISignInRequest.Options?
 
     var authEnvironment: AuthEnvironment!
 

@@ -27,19 +27,10 @@ public struct AWSAuthWebUISignInOptions {
     /// Safari always honors the request.
     public let preferPrivateSession: Bool
 
-    /// Use SFSafariViewController instead of ASWebAuthenticationSession for the authentication flow.
-    ///
-    /// This is useful when you want to maintain cookie continuity with SFSafariViewController instances
-    /// used elsewhere in your app, rather than sharing cookies with Safari.
-    /// - Note: SFSafariViewController is only available on iOS and visionOS.
-    public let preferSafariViewController: Bool
-
     public init(idpIdentifier: String? = nil,
-                preferPrivateSession: Bool = false,
-                preferSafariViewController: Bool = false) {
+                preferPrivateSession: Bool = false) {
         self.idpIdentifier = idpIdentifier
-        self.preferPrivateSession = preferPrivateSession
-        self.preferSafariViewController = preferSafariViewController
+        self.preferPrivateSession = preferPrivateSession        
     }
 }
 
@@ -47,18 +38,6 @@ extension AuthWebUISignInRequest.Options {
 
     public static func preferPrivateSession() -> AuthWebUISignInRequest.Options {
         let pluginOptions = AWSAuthWebUISignInOptions(preferPrivateSession: true)
-        let options = AuthWebUISignInRequest.Options(pluginOptions: pluginOptions)
-        return options
-    }
-
-    /// Creates Web UI sign in options that use SFSafariViewController instead of ASWebAuthenticationSession
-    ///
-    /// Use this when you want to maintain cookie continuity with SFSafariViewController instances
-    /// used elsewhere in your app, rather than sharing cookies with Safari.
-    /// - Note: SFSafariViewController is only available on iOS and visionOS.
-    /// - Returns: AuthWebUISignInRequest.Options configured to use SFSafariViewController
-    public static func preferSafariViewController() -> AuthWebUISignInRequest.Options {
-        let pluginOptions = AWSAuthWebUISignInOptions(preferSafariViewController: true)
         let options = AuthWebUISignInRequest.Options(pluginOptions: pluginOptions)
         return options
     }
