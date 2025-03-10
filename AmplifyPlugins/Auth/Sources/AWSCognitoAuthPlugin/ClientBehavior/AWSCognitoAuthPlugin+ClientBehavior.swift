@@ -60,6 +60,7 @@ extension AWSCognitoAuthPlugin: AuthCategoryBehavior {
             authStateMachine: authStateMachine,
             eventName: HubPayload.EventName.Auth.webUISignInAPI
         )
+        self.customWebUIOptions = options
         return try await taskQueue.sync {
             return try await task.value
         } as! AuthSignInResult
@@ -72,6 +73,7 @@ extension AWSCognitoAuthPlugin: AuthCategoryBehavior {
         let request = AuthWebUISignInRequest(presentationAnchor: presentationAnchor,
                                              authProvider: authProvider,
                                              options: options)
+        self.customWebUIOptions = options
         let task = AWSAuthWebUISignInTask(
             request,
             authConfiguration: authConfiguration,
