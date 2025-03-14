@@ -18,6 +18,12 @@ class AWSAuthWebUISignInTask: AuthWebUISignInTask, DefaultLogger {
     private let taskHelper: AWSAuthTaskHelper
     let eventName: HubPayloadEventName
 
+    /// Initialize the WebUI sign in task
+    /// - Parameters:
+    ///   - request: The sign in request with optional configuration for the auth UI
+    ///   - authConfiguration: Auth configuration for the plugin
+    ///   - authStateMachine: State machine to handle auth state
+    ///   - eventName: Name of the event for logging/telemetry
     init(_ request: AuthWebUISignInRequest,
          authConfiguration: AuthConfiguration,
          authStateMachine: AuthStateMachine,
