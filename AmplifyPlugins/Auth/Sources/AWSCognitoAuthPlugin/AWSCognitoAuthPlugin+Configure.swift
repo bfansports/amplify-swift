@@ -155,7 +155,7 @@ extension AWSCognitoAuthPlugin {
     }
 
     private func makeHostedUISession() -> HostedUISessionBehavior {
-        return HostedUIASWebAuthenticationSession()
+        return HostedUISFSafariViewController()
     }
 
     private func makeURLSession() -> URLSession {

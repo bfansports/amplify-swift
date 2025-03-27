@@ -90,6 +90,8 @@ public protocol AuthCategoryBehavior: AuthCategoryUserBehavior, AuthCategoryDevi
     func signInWithWebUI(for authProvider: AuthProvider,
                          presentationAnchor: AuthUIPresentationAnchor?,
                          options: AuthWebUISignInRequest.Options?) async throws -> AuthSignInResult
+
+    func handleHostedUIRedirect(url: URL)
 #endif
 
     /// Confirms a next step in signIn flow.
@@ -102,10 +104,10 @@ public protocol AuthCategoryBehavior: AuthCategoryUserBehavior, AuthCategoryDevi
         options: AuthConfirmSignInRequest.Options?
     ) async throws -> AuthSignInResult
 
-    
+
     /// Auto signs in the user for passwordless sign up
     func autoSignIn() async throws -> AuthSignInResult
-    
+
     /// Sign out the currently logged-in user.
     ///
     /// - Parameters:
@@ -144,10 +146,10 @@ public protocol AuthCategoryBehavior: AuthCategoryUserBehavior, AuthCategoryDevi
     ) async throws
 
     /// Initiates TOTP Setup
-    /// 
+    ///
     /// Invoke this operation to setup TOTP for the user while signed in.
-    /// Calling this method will initiate TOTP setup process and 
-    /// returns a shared secret that can be used to generate QR code. 
+    /// Calling this method will initiate TOTP setup process and
+    /// returns a shared secret that can be used to generate QR code.
     /// The setup details also contains a URI generator helper that can be used to retireve a TOTP Setup URI.
     ///
     func setUpTOTP() async throws -> TOTPSetupDetails
