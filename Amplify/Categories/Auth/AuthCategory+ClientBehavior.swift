@@ -5,10 +5,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+import Amplify
 import Foundation
 
 extension AuthCategory: AuthCategoryBehavior {
-
     public func signUp(
         username: String,
         password: String? = nil,
@@ -51,6 +51,10 @@ extension AuthCategory: AuthCategoryBehavior {
                                       presentationAnchor: presentationAnchor,
                                       options: options)
     }
+
+    public func handleHostedUIRedirect(url: URL) {
+        return plugin.handleHostedUIRedirect(url: url)
+    }
 #endif
 
     public func confirmSignIn(
@@ -67,7 +71,7 @@ extension AuthCategory: AuthCategoryBehavior {
     public func autoSignIn() async throws -> AuthSignInResult {
         try await plugin.autoSignIn()
     }
-    
+
     public func deleteUser() async throws {
         try await plugin.deleteUser()
     }

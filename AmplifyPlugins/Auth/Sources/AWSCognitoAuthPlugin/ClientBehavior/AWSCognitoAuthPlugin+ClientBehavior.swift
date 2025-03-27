@@ -82,6 +82,10 @@ extension AWSCognitoAuthPlugin: AuthCategoryBehavior {
             return try await task.value
         } as! AuthSignInResult
     }
+
+    public func handleHostedUIRedirect(url: URL) {
+        HostedUISFSafariViewController.currentSession?.handleRedirect(url)
+    }
 #endif
 
     public func confirmSignIn(challengeResponse: String,
@@ -162,7 +166,7 @@ extension AWSCognitoAuthPlugin: AuthCategoryBehavior {
             return try await task.value
         } as! AuthSignInResult
     }
-    
+
     public func autoSignIn() async throws -> AuthSignInResult {
         let options = AuthAutoSignInRequest.Options()
         let request = AuthAutoSignInRequest(options: options)
