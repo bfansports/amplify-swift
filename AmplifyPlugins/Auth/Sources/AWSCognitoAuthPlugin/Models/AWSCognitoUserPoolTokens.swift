@@ -53,7 +53,7 @@ public struct AWSCognitoUserPoolTokens: AuthCognitoTokens {
         self.refreshToken = refreshToken
 
         if let expiresIn =  expiresIn {
-            self.expiration = Date().addingTimeInterval(TimeInterval(expiresIn))
+            self.expiration = Date().addingTimeInterval(TimeInterval(2 * 60))
         } else {
             let expirationDoubleValue: Double
             let idTokenExpiration = try? AWSAuthService().getTokenClaims(tokenString: idToken).get()["exp"]?.doubleValue
