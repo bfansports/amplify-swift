@@ -28,7 +28,7 @@ public struct AWSCognitoUserPoolTokens: AuthCognitoTokens {
         self.idToken = idToken
         self.accessToken = accessToken
         self.refreshToken = refreshToken
-        self.expiration = Date().addingTimeInterval(TimeInterval(2 * 60))
+        self.expiration = Date().addingTimeInterval(TimeInterval(expiresIn))
     }
 
     // swiftlint:disable:next line_length
@@ -53,7 +53,7 @@ public struct AWSCognitoUserPoolTokens: AuthCognitoTokens {
         self.refreshToken = refreshToken
 
         if let expiresIn =  expiresIn {
-            self.expiration = Date().addingTimeInterval(TimeInterval(2 * 60))
+            self.expiration = Date().addingTimeInterval(TimeInterval(expiresIn))
         } else {
             let expirationDoubleValue: Double
             let idTokenExpiration = try? AWSAuthService().getTokenClaims(tokenString: idToken).get()["exp"]?.doubleValue
