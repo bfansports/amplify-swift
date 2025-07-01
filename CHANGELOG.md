@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.48.0 (2025-05-12)
+
+### Features
+
+- **auth**: ignore user cancel when session is expired on hostedui sign out (#3956)
+
+### Bug Fixes
+
+- **logging**: crash in release builds (#3971)
+
+## 2.47.0 (2025-04-24)
+
+### Features
+
+- bumping the sdk version to 1.2.59 (#3979)
+
+## 2.46.2 (2025-04-09)
+
+### Bug Fixes
+
+- **storage**: clean up cached files upon completion (#3967)
+
 ## 2.46.1 (2025-03-18)
 
 ### Bug Fixes
