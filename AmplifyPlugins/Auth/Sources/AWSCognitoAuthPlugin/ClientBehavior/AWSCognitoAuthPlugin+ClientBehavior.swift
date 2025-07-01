@@ -84,7 +84,7 @@ extension AWSCognitoAuthPlugin: AuthCategoryBehavior {
     }
 
     public func handleHostedUIRedirect(url: URL) {
-        HostedUISFSafariViewController.currentSession?.handleRedirect(url)
+        HostedUIWKWebViewAuthenticationSession.currentSession?.handleRedirect(url)
     }
 #endif
 
