@@ -3,12 +3,9 @@ import Amplify
 import Foundation
 import SafariServices
 
-
 class HostedUISFSafariViewController: NSObject, HostedUISessionBehavior {
     private var continuation: CheckedContinuation<[URLQueryItem], Error>?
-    private var presentationAnchor: UIWindow?
     private var safariVC: SFSafariViewController?
-    private var safariVCFactory = SFSafariViewController.init(url:)
 
     static var currentSession: HostedUISFSafariViewController?
 
@@ -24,27 +21,28 @@ class HostedUISFSafariViewController: NSObject, HostedUISessionBehavior {
             throw HostedUIError.invalidContext
         }
 
-        HostedUISFSafariViewController.currentSession = self
+        // Ensure only one session is active at a time
+        if let currentSession = HostedUISFSafariViewController.currentSession,
+           let safariVC = currentSession.safariVC {
+            safariVC.dismiss(animated: false)
+            currentSession.cancel()
+        }
 
         return try await withCheckedThrowingContinuation { continuation in
-            self.continuation = continuation
-            self.presentationAnchor = window
-
-            self.safariVC = createSafariSession(url: url)
-            self.safariVC!.delegate = self
-
             DispatchQueue.main.async {
+                self.continuation = continuation
+                self.safariVC = SFSafariViewController(url: url)
+                self.safariVC!.delegate = self
+                HostedUISFSafariViewController.currentSession = self
+
                 if let rootVC = window.rootViewController, let topVC = self.getTopViewController(from: rootVC), topVC.presentedViewController == nil {
-                    topVC.present(self.safariVC!,   animated: true)
+                    topVC.present(self.safariVC!, animated: true)
                 } else {
                     continuation.resume(throwing: HostedUIError.invalidContext)
+                    self.cleanUp()
                 }
             }
         }
-    }
-
-    private func createSafariSession(url: URL) -> SFSafariViewController {
-        return safariVCFactory(url)
     }
 
     private func getFallbackPresentationAnchor() -> UIWindow? {
@@ -70,12 +68,12 @@ class HostedUISFSafariViewController: NSObject, HostedUISessionBehavior {
         return top
     }
 
-
     func handleRedirect(_ url: URL) {
         safariVC?.dismiss(animated: true)
 
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let queryItems = components?.queryItems ?? []
+
         if let error = queryItems.first(where: { $0.name == "error" })?.value {
             let description = queryItems.first(where: { $0.name == "error_description" })?.value ?? ""
             continuation?.resume(throwing: HostedUIError.serviceMessage("\(error): \(description)"))
@@ -83,30 +81,24 @@ class HostedUISFSafariViewController: NSObject, HostedUISessionBehavior {
             continuation?.resume(returning: queryItems)
         }
 
-        continuation = nil
+        cleanUp()
     }
 
-    // private func convertHostedUIError(_ error: Error) -> HostedUIError {
-    //     if let asWebAuthError = error as? ASWebAuthenticationSessionError {
-    //         switch asWebAuthError.code {
-    //         case .canceledLogin:
-    //             return .cancelled
-    //         case .presentationContextNotProvided:
-    //             return .invalidContext
-    //         case .presentationContextInvalid:
-    //             return .invalidContext
-    //         @unknown default:
-    //             return .unknown
-    //         }
-    //     }
-    //     return .unknown
-    // }
+    private func cleanUp() {
+        continuation = nil
+        safariVC = nil
+        HostedUISFSafariViewController.currentSession = nil
+    }
+
+    func cancel() {
+        continuation?.resume(throwing: HostedUIError.cancelled)
+        cleanUp()
+    }
 }
 
 extension HostedUISFSafariViewController: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        continuation?.resume(throwing: HostedUIError.cancelled)
-        continuation = nil
+        cancel()
     }
 }
 #endif
