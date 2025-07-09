@@ -7,6 +7,7 @@ class HostedUISFSafariViewController: NSObject, HostedUISessionBehavior {
     private var continuation: CheckedContinuation<[URLQueryItem], Error>?
     private var safariVC: SFSafariViewController?
 
+
     static var currentSession: HostedUISFSafariViewController?
 
     func showHostedUI(
@@ -44,7 +45,7 @@ class HostedUISFSafariViewController: NSObject, HostedUISessionBehavior {
             }
         }
     }
-
+ 
     private func getFallbackPresentationAnchor() -> UIWindow? {
         var anchor: UIWindow?
 
