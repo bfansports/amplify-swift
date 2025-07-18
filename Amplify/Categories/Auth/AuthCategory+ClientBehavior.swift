@@ -51,10 +51,6 @@ extension AuthCategory: AuthCategoryBehavior {
                                       presentationAnchor: presentationAnchor,
                                       options: options)
     }
-
-    public func handleHostedUIRedirect(url: URL) {
-        return plugin.handleHostedUIRedirect(url: url)
-    }
 #endif
 
     public func confirmSignIn(
