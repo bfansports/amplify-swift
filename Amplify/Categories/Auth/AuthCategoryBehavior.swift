@@ -90,8 +90,6 @@ public protocol AuthCategoryBehavior: AuthCategoryUserBehavior, AuthCategoryDevi
     func signInWithWebUI(for authProvider: AuthProvider,
                          presentationAnchor: AuthUIPresentationAnchor?,
                          options: AuthWebUISignInRequest.Options?) async throws -> AuthSignInResult
-
-    func handleHostedUIRedirect(url: URL)
 #endif
 
     /// Confirms a next step in signIn flow.

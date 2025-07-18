@@ -80,26 +80,25 @@ class WKWebViewWrapper: UIViewController, WKNavigationDelegate, UIAdaptivePresen
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy
     ) -> Void) {
-        guard let url = navigationAction.request.url else {
+        guard let url = navigationAction.request.url,
+              url != startURL,
+              url.scheme == callbackScheme
+        else {
             decisionHandler(.allow)
             return
         }
 
-        if url.scheme == callbackScheme {
-            let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            let queryItems = components?.queryItems ?? []
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let queryItems = components?.queryItems ?? []
 
-            if let error = queryItems.first(where: { $0.name == "error" })?.value {
-                let desc = queryItems.first(where: { $0.name == "error_description" })?.value ?? ""
-                onRedirect(.failure(HostedUIError.serviceMessage("\(error): \(desc)")))
-            } else {
-                onRedirect(.success(queryItems))
-            }
-
-            decisionHandler(.cancel)
+        if let error = queryItems.first(where: { $0.name == "error" })?.value {
+            let desc = queryItems.first(where: { $0.name == "error_description" })?.value ?? ""
+            onRedirect(.failure(HostedUIError.serviceMessage("\(error): \(desc)")))
         } else {
-            decisionHandler(.allow)
+            onRedirect(.success(queryItems))
         }
+
+        decisionHandler(.allow)
     }
 }
 #endif
