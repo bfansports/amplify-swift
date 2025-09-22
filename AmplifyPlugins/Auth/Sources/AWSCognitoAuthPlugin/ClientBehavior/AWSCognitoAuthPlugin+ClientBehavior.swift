@@ -98,10 +98,6 @@ extension AWSCognitoAuthPlugin: AuthCategoryBehavior {
             return try await task.value
         } as! AuthSignInResult
     }
-
-    public func handleHostedUIRedirect(url: URL) {
-        HostedUIWKWebViewAuthenticationSession.currentSession?.handleRedirect(url)
-    }
 #endif
 
     public func confirmSignIn(
