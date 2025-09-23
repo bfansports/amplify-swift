@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// A class for recognizing long press gesture which notifies a `TriggerDelegate` of the event
-class LongPressGestureRecognizer: NSObject, TriggerRecognizer, UIGestureRecognizerDelegate {
+class LongPressGestureRecognizer: NSObject, @preconcurrency TriggerRecognizer, UIGestureRecognizerDelegate {
 
     weak var triggerDelegate: TriggerDelegate?
     weak var uiWindow: UIWindow?
@@ -24,8 +24,10 @@ class LongPressGestureRecognizer: NSObject, TriggerRecognizer, UIGestureRecogniz
         registerLongPressRecognizer()
     }
 
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                                  shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    )
         -> Bool {
         return true
     }
