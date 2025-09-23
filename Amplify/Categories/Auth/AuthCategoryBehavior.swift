@@ -87,11 +87,11 @@ public protocol AuthCategoryBehavior: AuthCategoryUserBehavior, AuthCategoryDevi
     ///   - authProvider: Auth provider used to signIn.
     ///   - presentationAnchor: Anchor on which the UI is presented.
     ///   - options: Parameters specific to plugin behavior.
-    func signInWithWebUI(for authProvider: AuthProvider,
-                         presentationAnchor: AuthUIPresentationAnchor?,
-                         options: AuthWebUISignInRequest.Options?) async throws -> AuthSignInResult
-
-    func handleHostedUIRedirect(url: URL)
+    func signInWithWebUI(
+        for authProvider: AuthProvider,
+        presentationAnchor: AuthUIPresentationAnchor?,
+        options: AuthWebUISignInRequest.Options?
+    ) async throws -> AuthSignInResult
 #endif
 
     /// Confirms a next step in signIn flow.
