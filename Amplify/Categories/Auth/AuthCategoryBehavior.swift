@@ -99,8 +99,6 @@ public protocol AuthCategoryBehavior: AuthCategoryUserBehavior, AuthCategoryDevi
         presentationAnchor: AuthUIPresentationAnchor?,
         options: AuthWebUISignInRequest.Options?
     ) async throws -> AuthSignInResult
-
-    func handleHostedUIRedirect(url: URL)
 #endif
 
     /// Confirms a next step in signIn flow.
