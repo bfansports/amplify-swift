@@ -163,7 +163,7 @@ extension AWSCognitoAuthPlugin {
     }
 
     private func makeHostedUISession() -> HostedUISessionBehavior {
-        return HostedUISFSafariViewController()
+        return HostedUIWKWebView()
     }
 
     private func makeURLSession() -> URLSession {
