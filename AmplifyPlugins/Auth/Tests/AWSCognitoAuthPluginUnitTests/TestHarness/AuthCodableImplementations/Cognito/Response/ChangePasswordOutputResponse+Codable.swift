@@ -11,12 +11,12 @@ import SmithyHTTPAPI
 extension ChangePasswordOutput: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case httpResponse = "httpResponse"
+        case httpResponse
     }
 
     public init(from decoder: Decoder) throws {
         let containerValues = try decoder.container(keyedBy: CodingKeys.self)
-        guard let httpResponse = try containerValues.decodeIfPresent(HTTPResponse.self, forKey: .httpResponse) else {
+        guard try (containerValues.decodeIfPresent(HTTPResponse.self, forKey: .httpResponse)) != nil else {
             fatalError("Unable to decode http response")
         }
         self.init()

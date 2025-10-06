@@ -1,5 +1,67 @@
 # Changelog
 
+## 2.51.0 (2025-09-16)
+
+### Features
+
+- **auth**: Refresh Token Rotation (#4050)
+
+## 2.50.0 (2025-08-06)
+
+### Features
+
+- bump swift sdk version to 1.5.x (#4028)
+- update minimum supported macOS version to match Swift SDK (#4025)
+
+## 2.49.1 (2025-07-17)
+
+### Bug Fixes
+
+- **auth**: allow removing and adding identity pool for an already deployed app (#4022)
+- accessing Availability.h macros in Swift (Xcode 26 support) (#4013)
+
+## 2.49.0 (2025-06-30)
+
+### Features
+
+- **predictions**: No-Light/FaceMovementOnly challenge support (#3622)
+
+## 2.48.2 (2025-06-30)
+
+### Bug Fixes
+
+- **api**: fixing mis-classified errors (#4012)
+- **logging**: crash on release builds in rotation logger (#4009)
+
+## 2.48.1 (2025-06-12)
+
+### Bug Fixes
+
+- **api**: fix subscription failures (#3998)
+- **storage**: avoid using self in failure messages (#3994)
+
+## 2.48.0 (2025-05-12)
+
+### Features
+
+- **auth**: ignore user cancel when session is expired on hostedui sign out (#3956)
+
+### Bug Fixes
+
+- **logging**: crash in release builds (#3971)
+
+## 2.47.0 (2025-04-24)
+
+### Features
+
+- bumping the sdk version to 1.2.59 (#3979)
+
+## 2.46.2 (2025-04-09)
+
+### Bug Fixes
+
+- **storage**: clean up cached files upon completion (#3967)
+
 ## 2.46.1 (2025-03-18)
 
 ### Bug Fixes
