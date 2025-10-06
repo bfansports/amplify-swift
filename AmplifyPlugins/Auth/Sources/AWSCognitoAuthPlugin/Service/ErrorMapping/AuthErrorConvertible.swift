@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-import Foundation
 import Amplify
+import Foundation
 
 /// A type that can be represented as an AuthError
 ///
@@ -19,3 +19,5 @@ extension AuthError: AuthErrorConvertible {
         return self
     }
 }
+
+extension AuthError: @unchecked Sendable { }
