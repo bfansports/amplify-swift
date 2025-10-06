@@ -62,7 +62,44 @@ class WKWebViewWrapper: UIViewController, WKNavigationDelegate, UIAdaptivePresen
         ])
 
         self.presentationController?.delegate = self
-        self.webView.load(URLRequest(url: startURL))
+
+        setInitialCookies {
+            self.webView.load(URLRequest(url: self.startURL))
+        }
+    }
+
+    private func setInitialCookies(completion: @escaping () -> Void) {
+        let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+
+        // Example cookies — replace or extend as needed
+        let cookies: [HTTPCookie] = [
+            HTTPCookie(properties: [
+                .domain: "connect.om.fr",
+                .path: "/",
+                .name: "X-Requested-With",
+                .value: "WebView",
+                .secure: "TRUE"
+            ])!,
+            HTTPCookie(properties: [
+                .domain: "connect.athena.om.fr",
+                .path: "/",
+                .name: "X-Requested-With",
+                .value: "WebView",
+                .secure: "TRUE"
+            ])!
+        ]
+
+        // Set cookies one by one, then call completion
+        var remainingCookies = cookies.count
+
+        for cookie in cookies {
+            cookieStore.setCookie(cookie) {
+                remainingCookies -= 1
+                if remainingCookies == 0 {
+                    completion()
+                }
+            }
+        }
     }
 
     @objc
